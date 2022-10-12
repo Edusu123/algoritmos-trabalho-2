@@ -6,12 +6,12 @@
 #include <stdio.h>
 #include <windows.h>
 #include <wincon.h>
-//Corrigir o 117
+// Corrigir o 117
 static const char senha1[] = "123456";
-static const char * centenas[]  = { "", "Cento", "Duzentos", "Trezentos", "Quatrocentos", "Quinhentos", "Seiscentos", "Setecentos", "Oitocentos", "Novecentos" };
-static const char * onze_dezenove[]   = { "", "Onze", "Doze", "Treze", "Quatorze", "Quinze", "Dezesseis", "Dezessete", "Dezoito", "Dezenove" };
-static const char * unidades[]  = { "Zero", "Um", "Dois", "Tres", "Quatro", "Cinco", "Seis", "Sete", "Oito", "Nove" };
-static const char * dez_noventa[] = { "", "Dez", "Vinte", "Trinta", "Quarenta", "Cinquenta", "Sessenta", "Setenta", "Oitenta", "Noventa" };
+static const char *centenas[] = {"", "Cento", "Duzentos", "Trezentos", "Quatrocentos", "Quinhentos", "Seiscentos", "Setecentos", "Oitocentos", "Novecentos"};
+static const char *onze_dezenove[] = {"", "Onze", "Doze", "Treze", "Quatorze", "Quinze", "Dezesseis", "Dezessete", "Dezoito", "Dezenove"};
+static const char *unidades[] = {"Zero", "Um", "Dois", "Tres", "Quatro", "Cinco", "Seis", "Sete", "Oito", "Nove"};
+static const char *dez_noventa[] = {"", "Dez", "Vinte", "Trinta", "Quarenta", "Cinquenta", "Sessenta", "Setenta", "Oitenta", "Noventa"};
 
 void cursorVisivel(bool status);
 void gotoxy(int x, int y);
@@ -84,15 +84,15 @@ bool senha(bool repete)
 
 void cheque()
 {
-	double num;
+    double num;
 
     system("cls");
-	printf("Digite a quantidade de Bits desejada para o cheque: ");
-	scanf("%lf", &num);
+    printf("Digite a quantidade de Bits desejada para o cheque: ");
+    scanf("%lf", &num);
 
     system("cls");
-	printf("\t\t| Ilhas Weblands | Banco Central | Agência 01 | Conta 19502022-0 | B$ %.2lf |\n", num);
-	printf("\t\t| Pague por este cheque a quantia de:");
+    printf("\t\t| Ilhas Weblands | Banco Central | Agência 01 | Conta 19502022-0 | B$ %.2lf |\n", num);
+    printf("\t\t| Pague por este cheque a quantia de:");
     centena(num);
     dezena(num);
     unidade(num);
@@ -108,16 +108,15 @@ void centena(double num)
         return;
     }
 
-	int c;
-    c = floor(num)/100;
+    int c;
+    c = floor(num) / 100;
 
     if (c == 0)
     {
         return;
     }
-    
-    printf(" %s", centenas[c]);
 
+    printf(" %s", centenas[c]);
 }
 
 void dezena(double num)
@@ -133,16 +132,15 @@ void dezena(double num)
     {
         printf(" e");
     }
-    
+
     if (c == 0 && d == 0)
     {
         return;
     }
-    
 
     if (od > 10 && od < 20)
     {
-       printf(" %s", onze_dezenove[od - 10]);
+        printf(" %s", onze_dezenove[od - 10]);
     }
     else
     {
@@ -165,19 +163,25 @@ void unidade(double num)
     u = i_num % 10;
     c = i_num / 100;
 
-    if (u == 0)
+    if (u == 0 && d == 0 && c == 0)
     {
-        if (d == 0 && c ==0)
-        {
-            printf(" %s", unidades[0]);
-        }
-        
+        printf(" %s", unidades[0]);
         return;
     }
-    
+
+    if (u == 0)
+    {
+        return;
+    }
+
+    if (d == 1)
+    {
+        return;
+    }
+
     if (c > 0 || d > 1)
     {
-       printf(" e");
+        printf(" e");
     }
 
     if (d != 1)
@@ -209,4 +213,3 @@ void gotoxy(int x, int y)
 
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
 }
-
