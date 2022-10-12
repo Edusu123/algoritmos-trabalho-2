@@ -11,10 +11,11 @@ static const char senha1[] = "123456";
 
 void cursorVisivel(bool status);
 void gotoxy(int x, int y);
-void cursor(bool status);
+void cursorVisivel(bool status);
 bool senha(bool repete);
 bool menu(bool repete);
 void saque();
+void cheque();
 
 void main()
 {
@@ -22,7 +23,7 @@ void main()
 
     SetConsoleTitle("Trabalho 2 (strings) - Eduardo Conde Pires");
 
-    cursor(true);
+    cursorVisivel(true);
 
     int repete = false;
     while (!senha(repete))
@@ -59,20 +60,6 @@ void gotoxy(int x, int y)
     c.Y = y - 1;
 
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
-}
-
-void cursor(bool status)
-{
-    if (status)
-    {
-        CONSOLE_CURSOR_INFO cursor = {1, TRUE};
-        SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
-    }
-    else
-    {
-        CONSOLE_CURSOR_INFO cursor = {1, FALSE};
-        SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
-    }
 }
 
 bool senha(bool repete)
@@ -138,7 +125,7 @@ bool menu(bool repete)
         printf("É necessário inserir uma opção válida!");
     }
 
-    cursor(true);
+    cursorVisivel(true);
     int dec = 0;
 
     gotoxy(5, 11);
@@ -155,6 +142,7 @@ bool menu(bool repete)
             return true;
             break;
         case 2:
+            cheque();
             return true;
             break;
         case 3:
@@ -170,4 +158,23 @@ bool menu(bool repete)
 void saque()
 {
     system("cls");
+}
+
+void cheque()
+{
+    system("cls");
+
+    double num;
+    gotoxy(5, 11);
+    printf("Digite a quantidade de Bits desejada para o cheque: ");
+    scanf("%lf", &num);
+
+    gotoxy(10, 13);
+    printf("| Ilhas Weblands | Banco Central | Agência 01 | Conta 19502022-0 | B$ %.2lf |", num);
+    gotoxy(10, 14);
+    printf("| Pague por este cheque a quantia de:");
+    // centena(num);
+    // dezena(num);
+    // unidade(num);
+    system("pause>NUL");
 }
