@@ -1,5 +1,6 @@
 #include <conio.h>
 #include <locale.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <windows.h>
@@ -8,14 +9,21 @@
 // salvar o arquivo com codificação ISO 8859-1
 
 static const char senha1[] = "123456";
+static const char *centenas[] = {"", "Cento", "Duzentos", "Trezentos", "Quatrocentos", "Quinhentos", "Seiscentos", "Setecentos", "Oitocentos", "Novecentos"};
+static const char *onze_dezenove[] = {"", "Onze", "Doze", "Treze", "Quatorze", "Quinze", "Dezesseis", "Dezessete", "Dezoito", "Dezenove"};
+static const char *unidades[] = {"Zero", "Um", "Dois", "Três", "Quatro", "Cinco", "Seis", "Sete", "Oito", "Nove"};
+static const char *dez_noventa[] = {"", "Dez", "Vinte", "Trinta", "Quarenta", "Cinquenta", "Sessenta", "Setenta", "Oitenta", "Noventa"};
 
 void cursorVisivel(bool status);
 void gotoxy(int x, int y);
 void cursorVisivel(bool status);
 bool senha(bool repete);
-bool menu(bool repete);
+void menu();
 void saque();
 void cheque();
+void centena(double num);
+void dezena(double num);
+void unidade(double num);
 
 void main()
 {
@@ -31,11 +39,7 @@ void main()
         repete = true;
     }
 
-    repete = false;
-    while (menu(repete))
-    {
-        repete = true;
-    }
+    menu(repete);
 }
 
 void cursorVisivel(bool status)
@@ -106,50 +110,41 @@ bool senha(bool repete)
     return false;
 }
 
-bool menu(bool repete)
+void menu()
 {
-    system("cls");
-    gotoxy(3, 5);
-    printf("Sistema bancário da Weblands!!");
-
-    gotoxy(5, 7);
-    printf("1. Saque");
-    gotoxy(5, 8);
-    printf("2. Cheque");
-    gotoxy(5, 9);
-    printf("3. Sair");
-
-    if (repete)
-    {
-        gotoxy(7, 13);
-        printf("É necessário inserir uma opção válida!");
-    }
-
     cursorVisivel(true);
     int dec = 0;
 
-    gotoxy(5, 11);
-    printf("Opção: ");
-
     do
     {
+        system("cls");
+        gotoxy(3, 5);
+        printf("Sistema bancário da Weblands!!");
+
+        gotoxy(5, 7);
+        printf("1. Saque");
+        gotoxy(5, 8);
+        printf("2. Cheque");
+        gotoxy(5, 9);
+        printf("3. Sair");
+
+        gotoxy(5, 11);
+        printf("Opção: ");
+
         scanf("%d", &dec);
 
         switch (dec)
         {
         case 1:
             saque();
-            return true;
             break;
         case 2:
             cheque();
-            return true;
             break;
         case 3:
-            return false;
+            return;
             break;
         default:
-            return true;
             break;
         }
     } while (dec < 1 || dec > 2);
@@ -173,8 +168,101 @@ void cheque()
     printf("| Ilhas Weblands | Banco Central | Agência 01 | Conta 19502022-0 | B$ %.2lf |", num);
     gotoxy(10, 14);
     printf("| Pague por este cheque a quantia de:");
-    // centena(num);
-    // dezena(num);
-    // unidade(num);
+
+    centena(num);
+    dezena(num);
+    unidade(num);
+
     system("pause>NUL");
+}
+
+void centena(double num)
+{
+
+    if (num == 100)
+    {
+        printf(" Cem");
+        return;
+    }
+
+    int c;
+    c = floor(num) / 100;
+
+    if (c == 0)
+    {
+        return;
+    }
+
+    printf(" %s", centenas[c]);
+}
+
+void dezena(double num)
+{
+    int c, d, u, od, i_num;
+    i_num = floor(num);
+    c = i_num / 100;
+    d = (i_num / 10) - (c * 10);
+    u = i_num % 10;
+    od = (d * 10) + u;
+
+    if (c > 0 && d > 0)
+    {
+        printf(" e");
+    }
+
+    if (c == 0 && d == 0)
+    {
+        return;
+    }
+
+    if (od > 10 && od < 20)
+    {
+        printf(" %s", onze_dezenove[od - 10]);
+    }
+    else
+    {
+        if (u == 0)
+        {
+            printf(" %s", dez_noventa[d]);
+        }
+        else
+        {
+            printf(" %s", dez_noventa[d]);
+        }
+    }
+}
+
+void unidade(double num)
+{
+    int u, d, c, i_num;
+    i_num = floor(num);
+    d = (i_num % 100) / 10;
+    u = i_num % 10;
+    c = i_num / 100;
+
+    if (u == 0 && d == 0 && c == 0)
+    {
+        printf(" %s", unidades[0]);
+        return;
+    }
+
+    if (u == 0)
+    {
+        return;
+    }
+
+    if (d == 1)
+    {
+        return;
+    }
+
+    if (c > 0 || d > 1)
+    {
+        printf(" e");
+    }
+
+    if (d != 1)
+    {
+        printf(" %s", unidades[u]);
+    }
 }
