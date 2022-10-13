@@ -13,6 +13,7 @@ static const char *centenas[] = {"", "Cento", "Duzentos", "Trezentos", "Quatroce
 static const char *onze_dezenove[] = {"", "Onze", "Doze", "Treze", "Quatorze", "Quinze", "Dezesseis", "Dezessete", "Dezoito", "Dezenove"};
 static const char *unidades[] = {"Zero", "Um", "Dois", "Três", "Quatro", "Cinco", "Seis", "Sete", "Oito", "Nove"};
 static const char *dez_noventa[] = {"", "Dez", "Vinte", "Trinta", "Quarenta", "Cinquenta", "Sessenta", "Setenta", "Oitenta", "Noventa"};
+static const float notas[] = {100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.01};
 
 void cursorVisivel(bool status);
 void gotoxy(int x, int y);
@@ -20,10 +21,12 @@ void cursorVisivel(bool status);
 bool senha(bool repete);
 void menu();
 void saque();
+void calculoNotas(double num);
 void cheque();
 void centena(double num);
 void dezena(double num);
 void unidade(double num);
+void centavos(double num);
 
 void main()
 {
@@ -39,7 +42,7 @@ void main()
         repete = true;
     }
 
-    menu(repete);
+    menu();
 }
 
 void cursorVisivel(bool status)
@@ -153,6 +156,38 @@ void menu()
 void saque()
 {
     system("cls");
+
+    double num;
+    gotoxy(5, 11);
+    printf("Digite o valor do saque: ");
+    scanf("%lf", &num);
+
+    calculoNotas(num);
+}
+
+void calculoNotas(double num)
+{
+    int linha = 13;
+
+    // notas
+    for (int i = 0; i < 11; i++)
+    {
+        int qtdNota = num / notas[i];
+
+        if (qtdNota > 0)
+        {
+            gotoxy(10, linha);
+
+            if (notas[i] > 1)
+                printf("%d notas de B$%.2lf", qtdNota, notas[i]);
+            else
+                printf("%d moedas de B$%.2lf", qtdNota, notas[i]);
+
+            linha += 1;
+        }
+
+        num = num - (qtdNota * notas[i]);
+    }
 }
 
 void cheque()
@@ -172,6 +207,7 @@ void cheque()
     centena(num);
     dezena(num);
     unidade(num);
+    centavos(num);
 
     system("pause>NUL");
 }
@@ -265,4 +301,22 @@ void unidade(double num)
     {
         printf(" %s", unidades[u]);
     }
+}
+
+void centavos(double num)
+{
+    double corrigido = (num - floor(num)) * 100;
+
+    if (corrigido > 0)
+    {
+        printf(" e");
+    }
+
+    // gotoxy(20, 20);
+    // printf("%lf", corrigido);
+
+    dezena(corrigido);
+    unidade(corrigido);
+
+    printf(" centBits");
 }
