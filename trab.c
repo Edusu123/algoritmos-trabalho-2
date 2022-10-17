@@ -307,13 +307,7 @@ void centavos(double num)
 {
     double corrigido = (num - floor(num)) * 100;
 
-    if (corrigido > 0)
-    {
-        printf(" e");
-    }
-
-    // gotoxy(20, 20);
-    // printf("%lf", corrigido);
+    printf(" e");
 
     dezena(corrigido);
     unidade(corrigido);
