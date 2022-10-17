@@ -6,7 +6,7 @@
 #include <windows.h>
 #include <wincon.h>
 
-// salvar o arquivo com codifica??o ISO 8859-1
+// salvar o arquivo com codifição ISO 8859-1
 
 static const char senha1[] = "123456";
 static const char *centenas[] = {"", "Cento", "Duzentos", "Trezentos", "Quatrocentos", "Quinhentos", "Seiscentos", "Setecentos", "Oitocentos", "Novecentos"};
@@ -32,15 +32,15 @@ void main()
 {
     setlocale(LC_ALL, "Portuguese");
 
-    SetConsoleTitle("Trabalho 2 (strings) - Eduardo Conde Pires");
+    SetConsoleTitle("Trabalho 2 (strings) - Eduardo Conde Pires e Renato Paes da Rosa Gonzaga de Oliveira");
 
     cursorVisivel(true);
 
-    // int repete = false;
-    // while (!senha(repete))
-    // {
-    //     repete = true;
-    // }
+    int repete = false;
+    while (!senha(repete))
+    {
+        repete = true;
+    }
 
     menu();
 }
@@ -199,7 +199,7 @@ void cheque()
     scanf("%lf", &num);
 
     gotoxy(10, 13);
-    printf("| Ilhas Weblands | Banco Central | Ag?ncia 01 | Conta 19502022-0 | B$ %.2lf |", num);
+    printf("| Ilhas Weblands | Banco Central | Agência 01 | Conta 19502022-0 | B$ %.2lf |", num);
     gotoxy(10, 14);
     printf("| Pague por este cheque a quantia de:");
 
