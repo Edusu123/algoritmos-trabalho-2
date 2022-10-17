@@ -31,4 +31,4 @@ void calculoNotas(double num)
 ````c
 int qtdNota = num / notas[i];
 ````
-- ### A divisão do número 0,1 pela nota de valor 0,1 retorna o valor 0, levando o programa a imprimir, 10 moedas de 0,01 ao invés de somente imprimir 1 moeda de 0,1.
+- ### A divisão do número 0,1 pela nota de valor 0,1 retorna o valor 0, levando o programa a imprimir 10 moedas de 0,01 ao invés de somente imprimir 1 moeda de 0,1.
