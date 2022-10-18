@@ -6,7 +6,7 @@
 #include <windows.h>
 #include <wincon.h>
 
-// salvar o arquivo com codifição ISO 8859-1
+// salvar o arquivo com codificação ISO 8859-1
 
 static const char senha1[] = "123456";
 static const char *centenas[] = {"", "Cento", "Duzentos", "Trezentos", "Quatrocentos", "Quinhentos", "Seiscentos", "Setecentos", "Oitocentos", "Novecentos"};
@@ -27,6 +27,7 @@ void centena(double num);
 void dezena(double num);
 void unidade(double num);
 void centavos(double num);
+float newPrecision(double n, double i);
 
 void main()
 {
@@ -171,6 +172,7 @@ void calculoNotas(double num)
 
     for (int i = 0; i < 11; i++)
     {
+        num = newPrecision(num, 2);
         int qtdNota = num / notas[i];
 
         if (qtdNota > 0)
@@ -312,4 +314,9 @@ void centavos(double num)
     unidade(corrigido);
 
     printf(" centBits");
+}
+
+float newPrecision(double n, double i)
+{
+    return round(pow(10, i) * n) / pow(10, i);
 }
